@@ -24,6 +24,38 @@ To use the Strava backend, deploy this folder with one of these:
 - Cloudflare Pages Git integration.
 - Wrangler Direct Upload from the command line.
 
+## GitHub Pages Build Settings
+
+If you deploy through GitHub, do **not** use:
+
+```bash
+npx wrangler deploy
+```
+
+That command deploys a Worker, not a Pages site, and causes this error:
+
+```text
+Missing entry-point to Worker script or to assets directory
+```
+
+Use these Cloudflare Pages settings instead:
+
+```text
+Framework preset: None
+Root directory: runner-tracker-cloudflare
+Build command: exit 0
+Build output directory: .
+Deploy command: leave blank
+```
+
+If Cloudflare has a "Deploy command" field and requires a value, use:
+
+```bash
+npx wrangler pages deploy .
+```
+
+The key difference is `wrangler pages deploy`, not `wrangler deploy`.
+
 ## Cloudflare Setup
 
 1. Create a D1 database named `runner-tracker`.
