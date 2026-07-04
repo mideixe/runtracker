@@ -1,0 +1,803 @@
+:root {
+  color-scheme: light;
+  --ink: #11110f;
+  --paper: #f5f0e7;
+  --paper-strong: #fffaf0;
+  --line: #11110f;
+  --muted: #696358;
+  --accent: #c8ff59;
+  --electric: var(--accent);
+  --strava: #fc4c02;
+  --red: #f2482e;
+  --bronze: #bd7441;
+  --silver: #a6adb5;
+  --gold: #d9a722;
+  --platinum: #8bd8e8;
+  --champion: #11110f;
+  --shadow: 10px 10px 0 #11110f;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background:
+    linear-gradient(90deg, rgba(17, 17, 15, 0.045) 1px, transparent 1px),
+    linear-gradient(rgba(17, 17, 15, 0.045) 1px, transparent 1px),
+    var(--paper);
+  background-size: 28px 28px;
+  color: var(--ink);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  min-height: 44px;
+  border: 2px solid var(--line);
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease,
+    background 150ms ease;
+}
+
+button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--line);
+}
+
+button:active {
+  transform: translate(0, 0);
+  box-shadow: none;
+}
+
+input {
+  width: 100%;
+  min-height: 46px;
+  border: 2px solid var(--line);
+  border-radius: 0;
+  background: var(--paper-strong);
+  color: var(--ink);
+  padding: 10px 12px;
+}
+
+input:focus,
+button:focus-visible {
+  outline: 3px solid var(--electric);
+  outline-offset: 2px;
+}
+
+.app-shell {
+  width: min(1480px, calc(100% - 28px));
+  margin: 0 auto;
+  padding: 18px 0 42px;
+}
+
+.masthead {
+  min-height: 360px;
+  border: 3px solid var(--line);
+  background: var(--paper-strong);
+  box-shadow: var(--shadow);
+  padding: 18px;
+}
+
+.masthead-copy {
+  border: 2px solid var(--line);
+  display: grid;
+  min-height: 100%;
+  gap: clamp(28px, 5vw, 64px);
+  align-content: space-between;
+  padding: clamp(18px, 4vw, 42px);
+}
+
+.eyebrow,
+.mini-label {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  border: 2px solid var(--line);
+  background: #fff;
+  padding: 5px 8px;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  font-size: 0.72rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  max-width: 100%;
+  margin-bottom: 18px;
+  font-size: clamp(3.3rem, 8.8vw, 8.5rem);
+  line-height: 0.88;
+  letter-spacing: 0;
+  overflow-wrap: normal;
+}
+
+h2 {
+  margin-bottom: 0;
+  font-size: clamp(1.55rem, 2.2vw, 2.3rem);
+  line-height: 0.95;
+  letter-spacing: 0;
+}
+
+h3 {
+  margin-bottom: 0;
+  font-size: 1.2rem;
+}
+
+.intro {
+  max-width: 42rem;
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.45;
+}
+
+.masthead-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+  gap: 18px;
+  align-items: end;
+}
+
+.leader-summary {
+  width: min(280px, calc(100% - 32px));
+  border: 2px solid var(--line);
+  background: var(--paper-strong);
+  padding: 14px;
+  box-shadow: 7px 7px 0 var(--line);
+  justify-self: end;
+}
+
+.leader-summary strong {
+  display: block;
+  margin: 10px 0 6px;
+  font-size: 2rem;
+  line-height: 0.9;
+}
+
+.leader-summary span:last-child {
+  display: block;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.score-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.score-strip article,
+.control-panel,
+.race-panel,
+.runner-card,
+.leader-row,
+.disconnected-panel,
+.runner-dialog,
+.dialog-stats article,
+.danger-zone,
+.integration-note,
+.milestone-item {
+  border: 2px solid var(--line);
+  background: var(--paper-strong);
+}
+
+.score-strip article {
+  min-height: 118px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.score-strip strong {
+  font-size: clamp(2.2rem, 4vw, 4.8rem);
+  line-height: 0.85;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  align-items: start;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.control-panel,
+.race-panel {
+  padding: 16px;
+}
+
+.control-panel {
+  position: sticky;
+  top: 14px;
+  box-shadow: 6px 6px 0 var(--line);
+}
+
+.panel-heading,
+.race-toolbar,
+.dialog-header,
+.danger-zone {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.panel-heading {
+  margin-bottom: 14px;
+}
+
+.panel-heading.compact {
+  align-items: flex-end;
+  margin: 24px 0 12px;
+}
+
+.stacked-form,
+.manual-form {
+  display: grid;
+  gap: 12px;
+}
+
+label span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.connect-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 2px solid var(--line);
+  background: #fff;
+  padding: 10px;
+}
+
+.connect-row input {
+  width: 22px;
+  min-height: 22px;
+  accent-color: var(--electric);
+}
+
+.connect-row span {
+  margin: 0;
+}
+
+.primary-button {
+  background: var(--electric);
+  color: var(--ink);
+  font-weight: 900;
+}
+
+.secondary-button {
+  background: var(--paper-strong);
+  font-weight: 900;
+}
+
+.ghost-button {
+  background: #fff;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.danger-button {
+  background: var(--red);
+  color: #fff;
+  font-weight: 900;
+}
+
+.integration-note {
+  margin-top: 14px;
+  padding: 12px;
+}
+
+.integration-note p,
+.danger-zone p,
+.dialog-header p {
+  margin-bottom: 0;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.milestone-list {
+  display: grid;
+  gap: 8px;
+}
+
+.milestone-item {
+  display: grid;
+  grid-template-columns: 10px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+}
+
+.milestone-swatch {
+  width: 10px;
+  height: 42px;
+  border: 2px solid var(--line);
+  background: var(--gold);
+}
+
+.milestone-item strong {
+  display: block;
+  line-height: 1;
+}
+
+.milestone-item span:last-child {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.race-panel {
+  min-width: 0;
+}
+
+.race-toolbar {
+  align-items: flex-end;
+  border-bottom: 2px solid var(--line);
+  padding-bottom: 14px;
+}
+
+.toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.toolbar-actions button {
+  padding: 0 14px;
+}
+
+.leaderboard {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.leader-row {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr) 130px 150px;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+}
+
+.leader-row:first-child {
+  background: #11110f;
+  color: #fff;
+}
+
+.leader-row:first-child .leader-meta,
+.leader-row:first-child .leader-stat span {
+  color: #ddd4c5;
+}
+
+.rank-badge {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 2px solid currentColor;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 950;
+}
+
+.leader-row:first-child .rank-badge {
+  background: var(--gold);
+  color: var(--ink);
+  border-color: var(--gold);
+}
+
+.leader-name {
+  min-width: 0;
+}
+
+.leader-name strong {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 1.08rem;
+}
+
+.leader-meta {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.leader-stat {
+  text-align: right;
+}
+
+.leader-stat strong,
+.leader-stat span {
+  display: block;
+}
+
+.leader-stat span {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.runner-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.runner-card {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  padding: 14px;
+}
+
+.runner-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.runner-card h3 {
+  overflow-wrap: anywhere;
+  font-size: 1.65rem;
+  line-height: 0.95;
+}
+
+.runner-card h3,
+.runner-card p {
+  margin-bottom: 0;
+}
+
+.status-pill {
+  border: 2px solid var(--line);
+  background: #fff;
+  padding: 5px 8px;
+  white-space: nowrap;
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.status-pill.connected {
+  background: var(--strava);
+  color: #fff;
+}
+
+.status-pill.manual {
+  background: #fff;
+}
+
+.progress-track {
+  height: 22px;
+  border: 2px solid var(--line);
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #fff 0,
+      #fff 16px,
+      #efe4d3 16px,
+      #efe4d3 32px
+    );
+}
+
+.progress-fill {
+  width: 0;
+  height: 100%;
+  background: var(--electric);
+  border-right: 2px solid var(--line);
+}
+
+.runner-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.runner-stats article {
+  border: 2px solid var(--line);
+  background: #fff;
+  padding: 10px;
+}
+
+.runner-stats span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.runner-stats strong {
+  display: block;
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+  font-size: 1.05rem;
+}
+
+.medal-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.medal-chip {
+  border: 2px solid var(--line);
+  background: #fff;
+  padding: 5px 7px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.medal-chip.earned {
+  color: var(--ink);
+}
+
+.medal-chip.earned.champion {
+  color: #fff;
+}
+
+.runner-actions {
+  display: grid;
+  gap: 8px;
+}
+
+.runner-actions button {
+  padding: 0 10px;
+  font-weight: 900;
+}
+
+.details-button {
+  background: var(--paper-strong);
+}
+
+.disconnected-panel {
+  margin-top: 14px;
+  padding: 14px;
+}
+
+.disconnected-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.disconnected-runner {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 2px solid var(--line);
+  background: #fff;
+  padding: 8px;
+}
+
+.disconnected-runner button {
+  min-height: 34px;
+  padding: 0 8px;
+  background: var(--paper-strong);
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(17, 17, 15, 0.6);
+  padding: 18px;
+}
+
+.dialog-backdrop.is-open {
+  display: flex;
+}
+
+.runner-dialog {
+  width: min(760px, 100%);
+  max-height: min(92vh, 820px);
+  overflow: auto;
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.close-button {
+  display: block;
+  margin-left: auto;
+  background: #fff;
+  padding: 0 12px;
+  font-weight: 900;
+}
+
+.dialog-header {
+  margin-top: 12px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.dialog-header h2 {
+  overflow-wrap: anywhere;
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
+}
+
+.dialog-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.dialog-stats article {
+  padding: 12px;
+}
+
+.dialog-stats strong {
+  display: block;
+  margin-top: 12px;
+  font-size: 1.35rem;
+}
+
+.manual-form {
+  border-top: 2px solid var(--line);
+  border-bottom: 2px solid var(--line);
+  padding: 16px 0;
+}
+
+.manual-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.danger-zone {
+  align-items: center;
+  margin-top: 16px;
+  padding: 12px;
+}
+
+.danger-zone button {
+  flex: 0 0 auto;
+  padding: 0 12px;
+}
+
+.empty-state {
+  border: 2px dashed var(--line);
+  background: #fff;
+  padding: 18px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+@media (max-width: 1080px) {
+  .masthead,
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .control-panel {
+    position: static;
+  }
+
+  .runner-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .app-shell {
+    width: min(100% - 18px, 680px);
+    padding-top: 9px;
+  }
+
+  .masthead {
+    min-height: 0;
+    padding: 10px;
+    box-shadow: 6px 6px 0 var(--line);
+  }
+
+  .masthead-copy {
+    min-height: 280px;
+    padding: 16px;
+  }
+
+  .masthead-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .score-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-grid {
+    gap: 12px;
+  }
+
+  .race-toolbar,
+  .panel-heading,
+  .danger-zone {
+    display: grid;
+  }
+
+  .toolbar-actions {
+    justify-content: stretch;
+  }
+
+  .toolbar-actions button {
+    flex: 1;
+  }
+
+  .leader-row {
+    grid-template-columns: 42px minmax(0, 1fr);
+  }
+
+  .leader-row .leader-stat {
+    grid-column: 2;
+    text-align: left;
+  }
+
+  .runner-stats,
+  .dialog-stats,
+  .manual-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .runner-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 460px) {
+  h1 {
+    font-size: 3rem;
+  }
+
+  .score-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .score-strip article {
+    min-height: 92px;
+  }
+
+  .leader-summary {
+    width: auto;
+    justify-self: stretch;
+  }
+
+  .dialog-backdrop {
+    padding: 8px;
+  }
+}

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Milestone Race Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="masthead" aria-labelledby="page-title">
+        <div class="masthead-copy">
+          <p class="eyebrow">Subscriber race dashboard</p>
+          <h1 id="page-title">Milestone Race Tracker</h1>
+          <div class="masthead-footer">
+            <p class="intro">
+              Bronze to Champion. Distance leads the race; cumulative time breaks the tie.
+            </p>
+            <div class="leader-summary">
+              <span class="mini-label">Current leader</span>
+              <strong id="heroLeader">Loading</strong>
+              <span id="heroLeadMeta">Calculating race pace</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="score-strip" aria-label="Race summary">
+        <article>
+          <span class="mini-label">Active runners</span>
+          <strong id="activeCount">0</strong>
+        </article>
+        <article>
+          <span class="mini-label">Miles logged</span>
+          <strong id="totalMiles">0.0</strong>
+        </article>
+        <article>
+          <span class="mini-label">Medals earned</span>
+          <strong id="totalMedals">0</strong>
+        </article>
+        <article>
+          <span class="mini-label">Next prize</span>
+          <strong id="nextPrize">Bronze</strong>
+        </article>
+      </section>
+
+      <section class="dashboard-grid">
+        <aside class="control-panel" aria-label="Subscription and race controls">
+          <div class="panel-heading">
+            <span class="mini-label">Subscribe</span>
+            <h2>Add runner</h2>
+          </div>
+
+          <form id="runnerForm" class="stacked-form">
+            <label>
+              <span>Name</span>
+              <input id="runnerName" name="runnerName" autocomplete="name" placeholder="Maya Chen" required />
+            </label>
+            <label>
+              <span>Age</span>
+              <input id="runnerAge" name="runnerAge" type="number" min="8" max="99" placeholder="34" required />
+            </label>
+            <label class="connect-row">
+              <input id="connectStrava" name="connectStrava" type="checkbox" checked />
+              <span>Connect Strava account</span>
+            </label>
+            <button class="primary-button" type="submit">Add to race</button>
+          </form>
+
+          <div class="integration-note">
+            <span class="mini-label">Strava API</span>
+            <p>
+              Hosted mode uses Cloudflare Functions for Strava OAuth, token refresh, and activity sync.
+            </p>
+          </div>
+
+          <div class="panel-heading compact">
+            <span class="mini-label">Milestones</span>
+            <h2>Medal ladder</h2>
+          </div>
+          <div id="milestoneList" class="milestone-list"></div>
+        </aside>
+
+        <section class="race-panel" aria-label="Race leaderboard and runners">
+          <div class="race-toolbar">
+            <div>
+              <span class="mini-label">Standings</span>
+              <h2>Running toward Champion</h2>
+            </div>
+            <div class="toolbar-actions" aria-label="Dashboard actions">
+              <button id="syncButton" class="secondary-button" type="button">Sync Strava</button>
+              <button id="resetButton" class="ghost-button" type="button">Reset demo</button>
+            </div>
+          </div>
+
+          <div id="leaderboard" class="leaderboard" aria-live="polite"></div>
+          <div id="runnerGrid" class="runner-grid"></div>
+
+          <section class="disconnected-panel" aria-labelledby="disconnected-title">
+            <div>
+              <span class="mini-label">Inactive</span>
+              <h2 id="disconnected-title">Disconnected runners</h2>
+            </div>
+            <div id="disconnectedList" class="disconnected-list"></div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <div id="runnerDialog" class="dialog-backdrop" aria-hidden="true">
+      <section class="runner-dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+        <button id="closeDialog" class="close-button" type="button" aria-label="Close runner details">Close</button>
+        <div class="dialog-header">
+          <span id="dialogRank" class="rank-badge">#1</span>
+          <div>
+            <span class="mini-label">Runner details</span>
+            <h2 id="dialogTitle">Runner</h2>
+            <p id="dialogMeta"></p>
+          </div>
+        </div>
+
+        <div class="dialog-stats">
+          <article>
+            <span class="mini-label">Distance</span>
+            <strong id="dialogMiles">0.0 mi</strong>
+          </article>
+          <article>
+            <span class="mini-label">Cumulative time</span>
+            <strong id="dialogTime">0h 00m</strong>
+          </article>
+          <article>
+            <span class="mini-label">Last run</span>
+            <strong id="dialogLastRun">None</strong>
+          </article>
+        </div>
+
+        <form id="manualRunForm" class="manual-form">
+          <div class="panel-heading compact">
+            <span class="mini-label">Manual entry</span>
+            <h3>Add unlogged miles</h3>
+          </div>
+          <div class="manual-grid">
+            <label>
+              <span>Miles</span>
+              <input id="manualMiles" type="number" min="0.1" step="0.1" placeholder="3.5" required />
+            </label>
+            <label>
+              <span>Hours</span>
+              <input id="manualHours" type="number" min="0" step="1" value="0" required />
+            </label>
+            <label>
+              <span>Minutes</span>
+              <input id="manualMinutes" type="number" min="0" max="59" step="1" value="30" required />
+            </label>
+          </div>
+          <button class="primary-button" type="submit">Add miles</button>
+        </form>
+
+        <div class="danger-zone">
+          <div>
+            <span class="mini-label">Edit runner</span>
+            <p>Disconnecting removes this runner from the active dashboard while keeping their race history in the app.</p>
+          </div>
+          <button id="disconnectButton" class="danger-button" type="button">Disconnect from dashboard</button>
+        </div>
+      </section>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
